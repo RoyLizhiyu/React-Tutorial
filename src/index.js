@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { render } from "react-dom";
+// import { render } from "react-dom";
 import { useState } from "react/cjs/react.development";
 import './index.css';
 
@@ -124,7 +124,8 @@ function Board(props){
 function Game(){
     const [history,setHistory] = useState([{squares:Array(9).fill(null)}]);
     const [xIsNext,setXIsNext] = useState(true);
-    const current = history[history.length-1]; //current is always the last item in history. (i.e. the lastest)
+    const [stepNumber, setStepNumber] = useState(0);
+    const current = history[stepNumber]; //current is always the last item in history. (i.e. the lastest)
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step,move)=> {
@@ -140,24 +141,31 @@ function Game(){
     })
 
     let status = '';
-    if (winner) {
-        status = 'Player ' + winner + ' Won!';
+    if (winner === 'draw') {
+      status = 'draw';
+    } else if (!winner){
+      status = xIsNext ? 'Next Player: X' : 'Next Player: O';
+
+
+        
     } else{
-        status = xIsNext?'Next Player: X' : 'Next Player: O';
+      status = 'Player ' + winner + ' Won!';
     }
 
+    function jumpTo(step){
+      setXIsNext(step%2===0);
+      setStepNumber(step);
+
+    }
     function handleClick(i){
-        const temp = history;
+        const temp = history.slice(0, stepNumber+1);
         const current = temp[temp.length-1];
         if (!current.squares[i] && !winner){
             const newSquares = current.squares.slice(); // copy the current squares array to a new array.
             newSquares[i] = xIsNext? 'X' : 'O';
-            const newHistory = {
-                squares: newSquares
-            }
-            setHistory(prev => {
-                return [...prev, newHistory]
-            });
+            const newHistory = temp.concat([{squares:newSquares}])
+            setHistory(newHistory);
+            setStepNumber(temp.length);
             setXIsNext(!xIsNext);
         }
     }
@@ -215,8 +223,18 @@ function calculateWinner(squares) {
       [0, 4, 8],
       [2, 4, 6],
     ];
+    let count = 0;
+    squares.forEach(element=>{
+      if (element !== null) {
+        count+= 1;
+      }
+    })
+    if (count === 9){
+      return 'draw';
+    }
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
+
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
         return squares[a];
       }
