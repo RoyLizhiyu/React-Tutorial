@@ -8,7 +8,7 @@ import './index.css';
 function Square(props){
     return (
         <button 
-        className="square"
+        className={ props.value === 'O'? 'square red': 'square blue'}
         onClick={props.onClick}>
         {props.value}
         </button>
@@ -133,6 +133,7 @@ function Game(){
 
         return <li key={move}>
         <button
+        
         onClick={()=>jumpTo(move)}
         >
         {description}

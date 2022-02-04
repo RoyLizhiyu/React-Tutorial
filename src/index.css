@@ -31,6 +31,10 @@ body {
     text-align: center;
     width: 34px;
   }
+
+  .square:hover{
+    background: rgb(106, 106, 145);
+  }
   
   .square:focus {
     outline: none;
@@ -43,9 +47,36 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+    min-height: 300px;
   }
   
   .game-info {
     margin-left: 20px;
   }
   
+
+#root{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 600px;
+  }
+
+
+.red {
+  color:red;
+}
+
+.blue{
+  color:blue;
+}
+
+.cat{
+  height: 350px;
+  border-radius: 100%;
+}
+
+.cat_div{
+  display: flex;
+  justify-content: center;
+}
