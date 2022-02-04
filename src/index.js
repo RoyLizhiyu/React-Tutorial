@@ -127,6 +127,20 @@ function Game(){
     const [stepNumber, setStepNumber] = useState(0);
     const current = history[stepNumber]; //current is always the last item in history. (i.e. the lastest)
     const winner = calculateWinner(current.squares);
+    let catPic;
+
+    switch(winner){
+      case 'O':
+        catPic = './oWin.jpg';
+        break;
+      case 'X':
+        catPic = './xWin.jpg';
+        break;
+
+      default:
+        catPic = './cat.jpg';
+    }
+
 
     const moves = history.map((step,move)=> {
         const description = move? 'Go To Move #' + move : 'Go To Game Start';
@@ -168,23 +182,29 @@ function Game(){
             setHistory(newHistory);
             setStepNumber(temp.length);
             setXIsNext(!xIsNext);
+
         }
     }
 
 
+
+
     return(
+      <div>
+      <div className ='cat_div'><img className="cat" src={catPic} alt="" /></div>
         <div className="game">
           <div className="game-board">
-            <Board 
-            squares = {current.squares}
-            onClick = {(i)=>handleClick(i)}
-            />
+          <Board 
+          squares = {current.squares}
+          onClick = {(i)=>handleClick(i)}
+          />
           </div>
           <div className="game-info">
-            <div>{status}</div>
-            <ol>{moves}</ol>
+          <div>{status}</div>
+          <ol>{moves}</ol>
           </div>
         </div>
+      </div>
     )
 }
 

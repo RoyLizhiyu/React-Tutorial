@@ -48,6 +48,7 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 300px;
+    justify-content: center;
   }
   
   .game-info {
@@ -73,10 +74,10 @@ body {
 
 .cat{
   height: 350px;
+  width: 350px;
   border-radius: 100%;
 }
 
 .cat_div{
-  display: flex;
-  justify-content: center;
+  margin-bottom: 200px;
 }
